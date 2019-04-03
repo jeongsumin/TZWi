@@ -23,7 +23,7 @@ DATATYPE=$DATATYPE0
 if [ ${DATATYPE::3} == "Run" ]; then
   DATATYPE=${DATATYPE::7} ## This gives Run2018A -> Run2018
   
-  [ ${DATATYPE::8} == "Run2017B" ] || DATATYPE=Run2017CF
+  [ ${DATATYPE::8} == "Run2016H" ] || DATATYPE=Run2016BG
 fi
 
 FILENAMES=$(cat $FILELIST | xargs -n$MAXFILES | sed -n "$(($JOBNUMBER+1)) p" | sed 's;/xrootd/;root://cms-xrdr.sdfarm.kr//xrd/;g')
@@ -42,7 +42,7 @@ if [ ${DATATYPE::2} == "MC" ]; then
     ARGS="$ARGS -I PhysicsTools.NanoAODTools.postprocessing.modules.common.lepSFProducer lepSF"
     ARGS="$ARGS -I PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer puAutoWeight"
 
-    ARGS="$ARGS -I PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer btagSF2017"
+    ARGS="$ARGS -I PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer btagSF2016"
     ARGS="$ARGS -I TZWi.TopAnalysis.postprocessing.btagWeightProducer btagWeight"
 fi
 echo $CMD $ARGS $OUTPATH $FILENAMES
