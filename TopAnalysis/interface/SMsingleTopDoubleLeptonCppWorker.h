@@ -12,7 +12,7 @@
 class SMsingleTopDoubleLeptonCppWorker {
 //190403 KST 11:38 : just copy frome FCNCTriLepton~.h, changed class name
 public:
-  enum class MODE {Auto=0, ElEl=1111, MuMu=1313, MuEl=1311} mode_ = MODE::Auto;
+  enum class MODE {Auto=0, ElEl=1111, MuMu=1313} mode_ = MODE::Auto;
 
   typedef TTreeReaderArray<float>* TRAF;
   typedef TTreeReaderArray<int>* TRAI;
@@ -53,7 +53,7 @@ public:
   float get_MET_pt()  const { return out_MET_pt; }
   float get_MET_phi() const { return out_MET_phi; }
 
-  float get_W_MT() const { return out_W_MT; }
+  float get_W_mass() const { return out_W_mass; }
 
   unsigned get_nVetoLepton() const { return out_nVetoLepton; }
   unsigned get_nGoodJet()   const { return out_nGoodJet; }
@@ -116,7 +116,7 @@ private:
 
   float out_MET_pt, out_MET_phi;
 
-  float out_W_MT;
+  float out_W_mass;
 
   unsigned short out_nVetoLepton;
   unsigned short out_nGoodJet, out_nBjet;

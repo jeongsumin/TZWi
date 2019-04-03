@@ -36,13 +36,13 @@ class SMsingleTopDoubleLepton(Module, object):
         self.out.branch("Lepton1_pdgId", "I")
         self.out.branch("Lepton2_pdgId", "I")
         self.out.branch("Z_charge", "I")
+        self.out.branch("W_mass", "F")
         self.out.branch("nVetoLepton", "i")
         #self.out.branch("nGoodJet", "i")
         self.out.branch("GoodJet_index", "i", lenVar="nGoodJet")
         for varName in ["pt", "eta", "phi", "mass", "CSVv2"]:
             self.out.branch("GoodJet_%s" % varName, "F", lenVar="nGoodJet")
         self.out.branch("nBjet", "i")
-        self.out.branch("W_MT", "F")
 
         self.initReaders(inputTree)
         pass
@@ -92,7 +92,7 @@ class SMsingleTopDoubleLepton(Module, object):
             for varName in ["pt", "eta", "phi", "mass"]:
                 setattr(event._tree, "b_out_%s_%s" % (objName, varName), getattr(self.worker, 'get_%s_%s' % (objName, varName))())
                 self.out.fillBranch("%s_%s" % (objName, varName), getattr(event._tree, 'b_out_%s_%s' % (objName, varName)))
-        for varName in ["MET_pt", "MET_phi", "Lepton1_pdgId", "Lepton2_pdgId", "nVetoLepton", "Z_charge",
+        for varName in ["MET_pt", "MET_phi", "Lepton1_pdgId", "Lepton2_pdgId", "nVetoLepton", "Z_charge", "W_mass"
                         #"nGoodJet", ## We skip for this nGoodJet, which have to be done by the framework
                         "GoodJet_CSVv2", "GoodJet_index", "nBjet"]:
             setattr(event._tree, "b_out_%s" % (varName), getattr(self.worker, 'get_%s' % (varName))())
@@ -105,4 +105,4 @@ class SMsingleTopDoubleLepton(Module, object):
 SMsingleTop_DoubleLepton = lambda : SMsingleTopDoubleLepton(mode="Auto")
 SMsingleTop_MuMu = lambda : SMsingleTopDoubleLepton(mode="MuMu")
 SMsingleTop_ElEl = lambda : SMsingleTopDoubleLepton(mode="ElEl")
-SMsingleTop_MuEl = lambda : SMsingleTopDoubleLepton(mode="MuEl")
+#SMsingleTop_MuEl = lambda : SMsingleTopDoubleLepton(mode="MuEl")
