@@ -168,7 +168,7 @@ bool SMsingleTopDoubleLeptonCppWorker::analyze() {
   if ( mode_ == MODE::Auto ) {
     if      ( muon1Idx     == -1 or in_Muons_p4[0]->At(muon1Idx) < in_Electrons_p4[0]->At(electron2Idx) * in_Electrons_eCorr->At(electron2Idx) ) actualMode = MODE::ElEl;
     else if ( electron1Idx == -1 or in_Electrons_p4[0]->At(electron1Idx) *  in_Electrons_eCorr->At(electron1Idx) < in_Muons_p4[0]->At(muon2Idx) ) actualMode = MODE::MuMu;
-    else actualMode = MODE::MuEl;
+    else actualMode = MODE::MuMu;
   }
 
   if ( actualMode == MODE::MuMu ) {
@@ -224,10 +224,6 @@ bool SMsingleTopDoubleLeptonCppWorker::analyze() {
     jetIdxsByPt.push_back(i);
     jetIdxsByBDiscr.push_back(i);
     if ( in_Jet_CSVv2->At(i) > minBjetBDiscr_ ) ++out_nBjet;
-    // Build W candidate with Jets
-    //take a two jet_mass -> compare the sum of the two jet_mass is nearest W mass -> fill the W mass
-
-    out_W_mass = jet1P4.M() + jet2P4.M();
   }
   out_nGoodJet = jetIdxsByPt.size();
 
@@ -242,7 +238,20 @@ bool SMsingleTopDoubleLeptonCppWorker::analyze() {
     out_GoodJet_CSVv2.push_back(in_Jet_CSVv2->At(kk));
     out_GoodJet_index.push_back(kk);
   }
-
+  //vector<>::iterator iter;
+/*
+  for( auto v_itr = out_GoodJet_p4 )
+  for (  ) {
+    const unsigned kk = jetIdxsByBDiscr.at(k);
+    if (  > minBjetBDiscr_ ) {// when jet is bjet, then I want to see the pt of that jet(for excluded leading bjet) and then make a W mass with two jets
+        for ( jetIdxsByBDiscr != 0 ) {
+            
+        }
+    
+    }
+    else if // when jet is not bjet, then just make a W mass with two jets
+  } 
+*/
   return true;
 }
 
