@@ -126,7 +126,7 @@ bool FCNCTriLeptonCppWorker::isGoodJet(const unsigned i) const {
   const double eta = in_Jet_p4[1]->At(i);
   if ( pt < minJetPt_ or std::abs(eta) > 4.5 ) return false;
   if ( std::abs(eta) > 2.69 && std::abs(eta) < 3 ) {
-    if ( !( std::abs(pt) > 30 && std::abs(pt) < 50 ) ) return false;
+    if ( std::abs(pt) > 30 && std::abs(pt) < 50 ) return false;
   }
   if ( in_Jet_id->At(i) == 0 ) return false;
 
@@ -223,6 +223,7 @@ bool FCNCTriLeptonCppWorker::analyze() {
         if ( nGoodMuons     >= 2 ) out_Lepton3_pdgId = -13*in_Muons_charge->At(muonIdxs[1]);
     }
   }
+//190411 AM 11:36 : start to change all lepton idxs are pushed in lepton_p4 vector(just ElElEl mode for test..)
   else if ( actualMode == MODE::ElElEl ) {
     if ( nGoodElectrons < 3 ) out_GoodLeptonCode -=   1;
     if ( nGoodElectrons < 2 ) out_GoodLeptonCode -=  10;
@@ -278,9 +279,9 @@ bool FCNCTriLeptonCppWorker::analyze() {
   for ( unsigned i=0, n=in_Jet_CSVv2->GetSize(); i<n; ++i ) {
     if ( !isGoodJet(i) ) continue;
     TLorentzVector jetP4 = buildP4(in_Jet_p4, i);
-    if ( lepton1P4.Pt() > 0 and lepton1P4.DeltaR(jetP4) < 0.3 ) continue;
-    if ( lepton2P4.Pt() > 0 and lepton2P4.DeltaR(jetP4) < 0.3 ) continue;
-    if ( lepton3P4.Pt() > 0 and lepton3P4.DeltaR(jetP4) < 0.3 ) continue;
+    if ( lepton1P4.Pt() > 0 and lepton1P4.DeltaR(jetP4) < 0.4 ) continue;
+    if ( lepton2P4.Pt() > 0 and lepton2P4.DeltaR(jetP4) < 0.4 ) continue;
+    if ( lepton3P4.Pt() > 0 and lepton3P4.DeltaR(jetP4) < 0.4 ) continue;
     jetIdxs.push_back(i);
     if ( in_Jet_CSVv2->At(i) > minBjetBDiscr_ ) ++out_nBjet;
   }
