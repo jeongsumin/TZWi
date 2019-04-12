@@ -223,7 +223,6 @@ bool FCNCTriLeptonCppWorker::analyze() {
         if ( nGoodMuons     >= 2 ) out_Lepton3_pdgId = -13*in_Muons_charge->At(muonIdxs[1]);
     }
   }
-//190411 AM 11:36 : start to change all lepton idxs are pushed in lepton_p4 vector(just ElElEl mode for test..)
   else if ( actualMode == MODE::ElElEl ) {
     if ( nGoodElectrons < 3 ) out_GoodLeptonCode -=   1;
     if ( nGoodElectrons < 2 ) out_GoodLeptonCode -=  10;
@@ -249,6 +248,8 @@ bool FCNCTriLeptonCppWorker::analyze() {
     if ( nGoodMuons >= 1 ) out_Lepton1_pdgId = -13*in_Muons_charge->At(muonIdxs[0]);
     if ( nGoodMuons >= 2 ) out_Lepton2_pdgId = -13*in_Muons_charge->At(muonIdxs[1]);
     if ( nGoodMuons >= 3 ) out_Lepton3_pdgId = -13*in_Muons_charge->At(muonIdxs[2]);
+    //If the event has out_GoodLeptonCode == 111 but Z candidate leptons(2,3) sign are wrong, then out_GoodLeptonCode must be changed to '-111'
+    if ( out_GoodLeptonCode == 111 && out_Lepton2_pdgId == out_Lepton3_pdgId ) out_GoodLeptonCode = -1*out_GoodLeptonCode;
   }
 
   TLorentzVector lepton1P4, lepton2P4, lepton3P4; //Lepton1 has the largest pt among the three leptons.
