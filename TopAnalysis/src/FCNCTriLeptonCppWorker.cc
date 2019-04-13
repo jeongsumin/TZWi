@@ -248,8 +248,6 @@ bool FCNCTriLeptonCppWorker::analyze() {
     if ( nGoodMuons >= 1 ) out_Lepton1_pdgId = -13*in_Muons_charge->At(muonIdxs[0]);
     if ( nGoodMuons >= 2 ) out_Lepton2_pdgId = -13*in_Muons_charge->At(muonIdxs[1]);
     if ( nGoodMuons >= 3 ) out_Lepton3_pdgId = -13*in_Muons_charge->At(muonIdxs[2]);
-    //If the event has out_GoodLeptonCode == 111 but Z candidate leptons(2,3) sign are wrong, then out_GoodLeptonCode must be changed to '-111'
-    if ( out_GoodLeptonCode == 111 && out_Lepton2_pdgId == out_Lepton3_pdgId ) out_GoodLeptonCode = -1*out_GoodLeptonCode;
   }
 
   TLorentzVector lepton1P4, lepton2P4, lepton3P4; //Lepton1 has the largest pt among the three leptons.
@@ -260,13 +258,13 @@ bool FCNCTriLeptonCppWorker::analyze() {
 
   // Build Z candidate (save non-zero charge of Z bosons together for bkg. estimation)
   if ( std::abs(out_GoodLeptonCode) > 110 ) {
-    const auto zP4 = lepton2P4+lepton3P4;
-    if ( out_Z_charge == 0 ) 
+  //190413 15:53 > Z candidated leptons are higher pt than additional lepton (here,lepton3) In SM. So I change zP4.
+    const auto zP4 = lepton1P4+lepton2P4;
     out_Z_p4[0] = zP4.Pt();
     out_Z_p4[1] = zP4.Eta();
     out_Z_p4[2] = zP4.Phi();
     out_Z_p4[3] = zP4.M();
-    out_Z_charge = out_Lepton2_pdgId+out_Lepton3_pdgId;
+    out_Z_charge = out_Lepton1_pdgId+out_Lepton2_pdgId;
     out_Z_charge = out_Z_charge == 0 ? 0 : 2*out_Z_charge/abs(out_Z_charge);
   }
 
