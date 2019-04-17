@@ -106,8 +106,8 @@ bool FCNCTriLeptonCppWorker::isGoodElectron(const unsigned i) const {
   const double pt = in_Electrons_p4[0]->At(i);
   const double eta = in_Electrons_p4[1]->At(i);
   if ( pt < 25 or std::abs(eta) > 2.5 ) return false;
-  //nanoAOD object -> Electron_cutBased_Sum16 0:fail, 1:veto, 2:medium, 3:tight
-  if ( in_Electrons_id->At(i) != 3 ) return false;
+  //nanoAOD object -> Electron_cutBased_Sum16 0:fail, 1:veto, 2:loose, 3:medium, 4:tight
+  if ( in_Electrons_id->At(i) != 4 ) return false;
 
   return true;
 }
@@ -117,7 +117,7 @@ bool FCNCTriLeptonCppWorker::isVetoElectron(const unsigned i) const {
   const double pt = in_Electrons_p4[0]->At(i);
   const double eta = in_Electrons_p4[1]->At(i);
   if ( pt < 10 or std::abs(eta) > 2.5 ) return false;
-  //nanoAOD object -> Electron_cutBased_Sum16 0:fail, 1:veto, 2:medium, 3:tight
+  //nanoAOD object -> Electron_cutBased_Sum16 0:fail, 1:veto, 2:loose, 3:medium, 4:tight
   if ( in_Electrons_id->At(i) == 0 ) return false;
 
   return true;
