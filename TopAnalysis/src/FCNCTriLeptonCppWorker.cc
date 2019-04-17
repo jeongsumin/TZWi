@@ -238,6 +238,7 @@ bool FCNCTriLeptonCppWorker::analyze() {
     if ( nGoodElectrons >= 1 ) out_Lepton1_pdgId = -11*in_Electrons_charge->At(electronIdxs[0]);
     if ( nGoodElectrons >= 2 ) out_Lepton2_pdgId = -11*in_Electrons_charge->At(electronIdxs[1]);
     if ( nGoodElectrons >= 3 ) out_Lepton3_pdgId = -11*in_Electrons_charge->At(electronIdxs[2]);
+    if ( out_GoodLeptonCode == 111 && (out_Lepton1_pdgId == out_Lepton2_pdgId) && (out_Lepton2_pdgId == out_Lepton3_pdgId) ) out_GoodLeptonCode = -111;
   }
   else if ( actualMode == MODE::MuMuMu ) {
     if ( nGoodMuons < 3 ) out_GoodLeptonCode -=   1;
