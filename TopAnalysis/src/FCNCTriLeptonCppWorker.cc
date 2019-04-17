@@ -118,7 +118,7 @@ bool FCNCTriLeptonCppWorker::isVetoElectron(const unsigned i) const {
   const double eta = in_Electrons_p4[1]->At(i);
   if ( pt < 10 or std::abs(eta) > 2.5 ) return false;
   //nanoAOD object -> Electron_cutBased_Sum16 0:fail, 1:veto, 2:loose, 3:medium, 4:tight
-  if ( in_Electrons_id->At(i) == 0 ) return false;
+  if ( in_Electrons_id->At(i) != 1 ) return false; //190417 test when only use cutbased Veto id to here..
 
   return true;
 }
