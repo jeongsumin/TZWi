@@ -45,6 +45,10 @@ class FCNCTriLepton(Module, object):
             self.out.branch("GoodJet_%s" % varName, "F", lenVar="nGoodJet")
         self.out.branch("nBjet", "i")
         self.out.branch("W_MT", "F")
+        #self.out.branch("GoodMuon_index", "i", lenVar="nGoodMuon")
+        #self.out.branch("GoodElectron_index", "i", lenVar="nGoodElectron")
+        self.out.branch("nGoodMuon", "i")
+        self.out.branch("nGoodElectron", "i")
 
         self.initReaders(inputTree)
         pass
@@ -98,11 +102,15 @@ class FCNCTriLepton(Module, object):
                         "nVetoLepton", "GoodLeptonCode", "Z_charge", "W_MT",
                         #"nGoodJet", #We do not keep nGoodJet here, it have to be done by the framework
                         "GoodJet_index", "GoodJet_CSVv2",
-                        "nBjet",]:
+                        "nBjet", #"GoodMuon_index", "GoodElectron_index"
+                        "nGoodMuon", "nGoodElectron"]:
             setattr(event._tree, "b_out_%s" % (varName), getattr(self.worker, 'get_%s' % (varName))())
             self.out.fillBranch(varName, getattr(event._tree, "b_out_%s" % varName))
         ## Special care for nGoodJet
         setattr(event._tree, "b_out_nGoodJet", self.worker.get_nGoodJet())
+        ## Care for nGoodMuon & nGoodElectron
+        #setattr(event._tree, "b_out_nGoodMuon", self.worker.get_nGoodMuon())
+        #setattr(event._tree, "b_out_nGoodElectron", self.worker.get_nGoodElectron())
 
         return True
 

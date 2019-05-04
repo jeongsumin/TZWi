@@ -12,7 +12,7 @@
 class FCNCTriLeptonCppWorker {
 //190306 KST 15:49 : just copy frome TTbarDouble~.h, changed class name
 public:
-  enum class MODE {None=0, ElElMu=111113, MuMuEl=131311, ElElEl=111111, MuMuMu=131313} mode_ = MODE::None;
+  enum class MODE {None=0, MuElEl=131111, ElMuMu=111313, ElElEl=111111, MuMuMu=131313} mode_ = MODE::None;
 
   typedef TTreeReaderArray<float>* TRAF;
   typedef TTreeReaderArray<int>* TRAI;
@@ -71,6 +71,11 @@ public:
   std::vector<float> get_GoodJet_CSVv2() const { return out_GoodJet_CSVv2; }
   std::vector<unsigned short> get_GoodJet_index() const { return out_GoodJet_index; }
   unsigned get_nBjet()   const { return out_nBjet; }
+
+  unsigned get_nGoodMuon() const { return out_nGoodMuon; }
+  unsigned get_nGoodElectron() const { return out_nGoodElectron; }
+  std::vector<unsigned short> get_GoodMuon_index() const { return out_GoodMuon_index; }
+  std::vector<unsigned short> get_GoodElectron_index() const { return out_GoodElectron_index; }
 
 private:
   const double minMuonPt_ = 30, maxMuonEta_ = 2.5; //Signal & veto reco. cuts are same
@@ -131,6 +136,10 @@ private:
   std::vector<float> out_GoodJet_p4[4];
   std::vector<float> out_GoodJet_CSVv2;
   std::vector<unsigned short> out_GoodJet_index;
+
+  unsigned short out_nGoodMuon, out_nGoodElectron;
+  std::vector<unsigned short> out_GoodMuon_index;
+  std::vector<unsigned short> out_GoodElectron_index;
 
 };
 
