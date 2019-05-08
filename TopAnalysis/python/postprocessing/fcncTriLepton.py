@@ -116,5 +116,5 @@ class FCNCTriLepton(Module, object):
 
 fcnc_MuMuMu = lambda : FCNCTriLepton(mode="MuMuMu")
 fcnc_ElElEl = lambda : FCNCTriLepton(mode="ElElEl")
-fcnc_MuMuEl = lambda : FCNCTriLepton(mode="MuMuEl")
-fcnc_ElElMu = lambda : FCNCTriLepton(mode="ElElMu")
+fcnc_ElMuMu = lambda : FCNCTriLepton(mode="ElMuMu")
+fcnc_MuElEl = lambda : FCNCTriLepton(mode="MuElEl")
