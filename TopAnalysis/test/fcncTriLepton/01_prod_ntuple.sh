@@ -16,11 +16,11 @@ MAXFILES=$3
 JOBNUMBER=$4
 
 case $CHANNEL in
-  MuElEl|ElMuEl)
-    CHANNEL=ElElMu
+  ElElMu|ElMuEl)
+    CHANNEL=MuElEl
     ;;
-  ElMuMu|MuElMu)
-    CHANNEL=MuMuEl
+  MuMuEl|MuElMu)
+    CHANNEL=ElMuMu
     ;;
 esac
 
@@ -34,7 +34,7 @@ ERA4HLT=$DATATYPE
 if [ ${DATATYPE::3} == "Run" ]; then
 # DATATYPE=${DATATYPE0::7} ## This gives Run2018A -> Run2018
   case $ERA in
-    Run2016B_ver1|Run2016_ver2|Run2016C|Run2016D|Run2016E)
+    Run2016B_ver1|Run2016B_ver2|Run2016C|Run2016D|Run2016E)
       ERA4HLT=Run2016BE
       ;;
     Run2016F|Run2016G)
