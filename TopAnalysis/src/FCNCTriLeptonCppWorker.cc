@@ -260,8 +260,8 @@ bool FCNCTriLeptonCppWorker::analyze() {
             out_GoodLeptonCode *= -1;
         }
         else {
-            std::swap(out_Lepton1_pdgId, out_Lepton2_pdgId);
-            for ( unsigned i=0; i<4; ++i ) std::swap(out_Lepton1_p4[i], out_Lepton2_p4[i]);
+            std::swap(out_Lepton1_pdgId, out_Lepton3_pdgId); //keep the lepton which has largest Pt in Z candidate
+            for ( unsigned i=0; i<4; ++i ) std::swap(out_Lepton1_p4[i], out_Lepton3_p4[i]);
         }
     }
   }
@@ -285,8 +285,8 @@ bool FCNCTriLeptonCppWorker::analyze() {
             out_GoodLeptonCode *= -1;
         }
         else {
-            std::swap(out_Lepton1_pdgId, out_Lepton2_pdgId);
-            for ( unsigned i=0; i<4; ++i ) std::swap(out_Lepton1_p4[i], out_Lepton2_p4[i]);
+            std::swap(out_Lepton1_pdgId, out_Lepton3_pdgId);
+            for ( unsigned i=0; i<4; ++i ) std::swap(out_Lepton1_p4[i], out_Lepton3_p4[i]);
         }
     }
   }
