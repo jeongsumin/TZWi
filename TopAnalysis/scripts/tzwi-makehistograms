@@ -21,7 +21,8 @@ if not os.path.exists(odName):
     try: os.makedirs(odName)
     except: pass
 
-chain = TChain("Friends")
+#chain = TChain("Friends")
+chain = TChain("Events")
 chain.Add(dName+"/*.root")
 gROOT.SetBatch(True)
 
@@ -30,7 +31,7 @@ if 'NPROC' in os.environ:
     prf = TProof.Open("workers=%s" % nProc)
     chain.SetProof(True)
 
-print "Processing", ofName
+print "Processing", ofName, "=>", odName
 
 oFile = TFile(ofName, 'recreate')
 
