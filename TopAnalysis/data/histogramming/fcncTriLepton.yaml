@@ -1,8 +1,4 @@
-## Histogramming for ttbb dilepton analysis
-
-weights:
-    central: "genWeight*puWeight*BtagWeight"
-    noWeight: "genWeight"
+## Histogramming for fcnc Trilepton analysis
 
 steps:
     - name: "S1"
@@ -29,12 +25,33 @@ steps:
               "Z_pt", "Z_mass",
               "nGoodJet", "nBjet", "nGoodJet_nBjet",
               "MET_pt", "MET_phi",]
+    - name: "S4"
+      cuts: ["CutStep >= 4"]
+      hists: ["nPV", "nPV_noWeight",
+              "Lepton1_pt", "Lepton2_pt", "Lepton3_pt",
+              "Z_pt", "Z_mass",
+              "nGoodJet", "nBjet", "nGoodJet_nBjet",
+              "MET_pt", "MET_phi",]
+    - name: "S5"
+      cuts: ["CutStep >= 5"]
+      hists: ["nPV", "nPV_noWeight",
+              "Lepton1_pt", "Lepton2_pt", "Lepton3_pt",
+              "Z_pt", "Z_mass",
+              "nGoodJet", "nBjet", "nGoodJet_nBjet",
+              "MET_pt", "MET_phi",]
+    - name: "S6"
+      cuts: ["CutStep >= 6"]
+      hists: ["nPV", "nPV_noWeight",
+              "Lepton1_pt", "Lepton2_pt", "Lepton3_pt",
+              "Z_pt", "Z_mass",
+              "nGoodJet", "nBjet", "nGoodJet_nBjet",
+              "MET_pt", "MET_phi",]
 
 hists:
     nPV_noWeight:
         title: "nPV_noWeight;Vertex multiplicity;Events (unweighted)"
         expr: "PV_npvsGood"
-        weights: noWeight
+        weightsToDrop: ["puWeight", "puWeightUp", "puWeightDown"]
         bins:
             nbinsX: 100
             xmin: 0

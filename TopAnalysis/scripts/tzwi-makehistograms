@@ -23,7 +23,7 @@ if not os.path.exists(odName):
 
 #chain = TChain("Friends")
 chain = TChain("Events")
-chain.Add(dName+"/*.root")
+chain.Add(dName+"/*Skim.root") #for keep root files which has Frineds tree in ntuple/ 
 gROOT.SetBatch(True)
 
 if 'NPROC' in os.environ:
