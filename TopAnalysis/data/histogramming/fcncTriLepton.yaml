@@ -1,5 +1,4 @@
 ## Histogramming for fcnc Trilepton analysis
-
 steps:
     - name: "S1"
       cuts: ["CutStep >= 1"]
@@ -46,7 +45,6 @@ steps:
               "Z_pt", "Z_mass",
               "nGoodJet", "nBjet", "nGoodJet_nBjet",
               "MET_pt", "MET_phi",]
-
 hists:
     nPV_noWeight:
         title: "nPV_noWeight;Vertex multiplicity;Events (unweighted)"
@@ -63,7 +61,6 @@ hists:
             nbinsX: 100
             xmin: 0
             xmax: 100
-
     Lepton1_pt:
         title: "Lepton1_pt;Leading lepton p_{T} (GeV);Events"
         bins:
@@ -82,7 +79,6 @@ hists:
             nbinsX: 50
             xmin: -3.1415922
             xmax:  3.1415922
-
     Lepton2_pt:
         title: "Lepton2_pt;2nd leading lepton p_{T} (GeV);Events"
         bins:
@@ -101,7 +97,6 @@ hists:
             nbinsX: 50
             xmin: -3.1415922
             xmax:  3.1415922
-
     Lepton3_pt:
         title: "Lepton3_pt;3rd leading lepton p_{T} (GeV);Events"
         bins:
@@ -120,7 +115,6 @@ hists:
             nbinsX: 50
             xmin: -3.1415922
             xmax:  3.1415922
-
     Z_pt:
         title: "Z_pt;Z p_{T} (GeV);Events"
         bins:
@@ -148,32 +142,28 @@ hists:
 
     MET_pt:
         title: "MET;Missing transverse momentum (GeV);Events"
-        bins: 
+        bins:
             nbinsX: 100
             xmin: 0
             xmax: 200
     MET_phi:
         title: "MET_phi;MET #phi (radian);Events"
-        bins: 
+        bins:
             nbinsX: 100
             xmin: -3.1415922
             xmax:  3.1415922
-
     nGoodJet:
         title: "nGoodJet;Jet multiplicity;Events"
         bins:
             nbinsX: 20
             xmin: 0
             xmax: 20
-        expr: "nGoodJet"
-
     nBjet:
         title: "nBjet;Bjet multiplicity;Events"
         bins:
             nbinsX: 20
             xmin: 0
             xmax: 20
-
     nGoodJet_nBjet:
         title: "nGoodJet vs nBjet;nGoodJet;nBjet;Events"
         expr: "nBjet:nGoodJet" # y:x
