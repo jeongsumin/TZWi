@@ -1,13 +1,13 @@
 ## Histogramming for fcnc Trilepton analysis
 steps:
     - name: "S1"
-      cuts: ["CutStep >= 1"]
+      cuts: ["CutStep >=1"]
       hists: ["nPV", "nPV_noWeight",
               "Lepton1_pt", "Lepton1_eta", "Lepton1_phi",
               "Lepton2_pt", "Lepton2_eta", "Lepton2_phi",
               "Lepton3_pt", "Lepton3_eta", "Lepton3_phi",
-              "nGoodJet", "nBjet", "nGoodJet_nBjet",
-              "Z_pt", "Z_mass",]
+              "Z_pt", "Z_mass",
+              "nGoodJet", "nBjet", "nGoodJet_nBjet",]
     - name: "S2"
       cuts: ["CutStep >= 2"]
       hists: ["nPV", "nPV_noWeight",
