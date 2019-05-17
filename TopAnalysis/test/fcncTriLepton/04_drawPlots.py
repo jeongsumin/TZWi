@@ -129,14 +129,14 @@ def buildCanvas(prefix, hists, opt):
 
     c.Print("plots/%s/%s/%s.png" % (mode, stepName, hName))
     return c, pad1, pad2, leg, hRD, hMC, hsMC, hsNoStack
-    
+
 
 info = {}
 info.update(yaml.load(open("config/plots.yaml")))
 info.update(yaml.load(open("config/grouping.yaml")))
 info.update(yaml.load(open("config/histogramming.yaml")))
 
-modes = ["ElEl", "MuMu", "MuEl"]
+modes = ["MuMuMu", "MuElEl", "ElMuMu", "ElElEl"]
 files = []
 objs = {}
 for mode in modes:
