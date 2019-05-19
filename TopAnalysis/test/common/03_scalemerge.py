@@ -69,7 +69,7 @@ for mode in modes:
 
                 for alias in procInfo['datasets']:
                     if alias not in info['dataset']: continue
-                    physProcName = alias.split('.')[1]
+                    physProcName = alias.split('.',1)[-1]
                     xsec = 1.0
                     if physProcName in info['crosssection']:
                         xsec = info['crosssection'][physProcName]
