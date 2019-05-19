@@ -56,54 +56,67 @@ def buildCanvas(prefix, hists, opt):
         leg.AddEntry(h, h.GetTitle(), "F")
     leg.AddEntry(hRD, "Data", "lp")
 
-    hRatio = hRD.Clone()
-    hRatio.SetName(dirname+"/hr"+basename)
-    hRatio.Reset()
-    hRatio.Divide(hMC, hRD, 1, 1, "B")
+    hToDraw = hMC if hMC != None else hRD if hRD != None else None
+
+    hRatio = hToDraw.Clone() if hToDraw != None else None
+    if hRatio != None:
+        hRatio.SetName(dirname+"/hr"+basename)
+        hRatio.Reset()
+        if None not in (hMC, hRD): hRatio.Divide(hMC, hRD, 1, 1, "B")
 
     ## Set range
-    maxY = max(hMC.GetMaximum(), hRD.GetMaximum())
-    if opt['doLogY']:
-        hMC.SetMinimum(0.1*min([hMCs[-1].GetBinContent(i+1) for i in range(hMCs[-1].GetNbinsX()) if hMCs[-1].GetBinContent(i+1) > 0]+
-                               [hRD.GetBinContent(i+1) for i in range(hRD.GetNbinsX()) if hRD.GetBinContent(i+1) > 0]))
-        hMC.SetMaximum(maxY*pow(10, 1./0.6))
-    else:
-        hMC.SetMinimum(0)
-        hMC.SetMaximum(maxY/0.6)
-    hRatio.SetMinimum(0)
-    hRatio.SetMaximum(2)
+    maxY = max(hMC.GetMaximum() if hMC != None else 0,
+               hRD.GetMaximum() if hRD != None else 0)
+
+    if hToDraw != None:
+        if opt['doLogY'] and maxY != 0:
+            mins = [maxY]
+            if hRD != None: mins.extend([hRD.GetBinContent(i+1) for i in range(hRD.GetNbinsX()) if hRD.GetBinContent(i+1) > 0])
+            if len(hMCs) != 0: mins.extend([hMCs[-1].GetBinContent(i+1) for i in range(hMCs[-1].GetNbinsX()) if hMCs[-1].GetBinContent(i+1) > 0])
+            hToDraw.SetMinimum(0.5*min(mins))
+
+            hToDraw.SetMaximum(maxY*pow(10, 1./0.6))
+        else:
+            hToDraw.SetMinimum(0)
+            hToDraw.SetMaximum(maxY/0.6)
+    if hRatio != None:
+        hRatio.SetMinimum(0)
+        hRatio.SetMaximum(2)
 
     ## Set titles
-    hsMC.SetTitle("%s;%s;%s" % (hsMC.GetTitle(), hMC.GetXaxis().GetTitle(), hMC.GetYaxis().GetTitle()))
-    hRatio.SetTitle("MC/Data;;MC/Data")
+    if hMC != None: hsMC.SetTitle("%s;%s;%s" % (hsMC.GetTitle(), hToDraw.GetXaxis().GetTitle(), hToDraw.GetYaxis().GetTitle()))
+    if hRatio != None: hRatio.SetTitle("MC/Data;;MC/Data")
 
     ## Set styles
     leg.SetNColumns(3)
     leg.SetFillStyle(0)
     leg.SetBorderSize(0)
 
-    hRD.SetMarkerSize(1.)
-    hRD.SetMarkerColor(kBlack)
-    hRD.SetLineColor(kBlack)
-    hRD.SetMarkerStyle(kFullCircle)
-    hMC.GetXaxis().SetTitleSize(0.05)
-    hMC.GetXaxis().SetTitleOffset(1.20)
-    hMC.GetXaxis().SetLabelSize(0.04)
-    hMC.GetYaxis().SetTitleSize(0.05)
-    hMC.GetYaxis().SetTitleOffset(1.20)
-    hMC.GetYaxis().SetLabelSize(0.04)
+    if hRD != None:
+        hRD.SetMarkerSize(1.)
+        hRD.SetMarkerColor(kBlack)
+        hRD.SetLineColor(kBlack)
+        hRD.SetMarkerStyle(kFullCircle)
+    if hToDraw != None:
+        hToDraw.GetXaxis().SetTitleSize(0.05)
+        hToDraw.GetXaxis().SetTitleOffset(1.20)
+        hToDraw.GetXaxis().SetLabelSize(0.04)
+        hToDraw.GetYaxis().SetTitleSize(0.05)
+        hToDraw.GetYaxis().SetTitleOffset(1.20)
+        hToDraw.GetYaxis().SetLabelSize(0.04)
 
-    hRatio.SetMarkerSize(1.)
-    hRatio.SetMarkerColor(kBlack)
-    hRatio.SetLineColor(kBlack)
-    hRatio.SetMarkerStyle(kFullCircle)
-    hRatio.GetXaxis().SetTitleSize(0.12)
-    hRatio.GetXaxis().SetTitleOffset(0.8)
-    hRatio.GetXaxis().SetLabelSize(0.1)
-    hRatio.GetYaxis().SetTitleSize(0.12)
-    hRatio.GetYaxis().SetTitleOffset(0.5)
-    hRatio.GetYaxis().SetLabelSize(0.1)
-    hRatio.GetYaxis().SetNdivisions(505)
+    if hRatio != None:
+        hRatio.SetMarkerSize(1.)
+        hRatio.SetMarkerColor(kBlack)
+        hRatio.SetLineColor(kBlack)
+        hRatio.SetMarkerStyle(kFullCircle)
+        hRatio.GetXaxis().SetTitleSize(0.12)
+        hRatio.GetXaxis().SetTitleOffset(0.8)
+        hRatio.GetXaxis().SetLabelSize(0.1)
+        hRatio.GetYaxis().SetTitleSize(0.12)
+        hRatio.GetYaxis().SetTitleOffset(0.5)
+        hRatio.GetYaxis().SetLabelSize(0.1)
+        hRatio.GetYaxis().SetNdivisions(505)
 
     ## Draw
     c = TCanvas("c%s" % prefix.replace('/','_'), prefix, 500, 700)
@@ -114,33 +127,34 @@ def buildCanvas(prefix, hists, opt):
     pad1.SetTopMargin(0.1)
     pad1.SetLogy(opt['doLogY'])
 
-    hMC.Draw("hist")
-    hsMC.Draw("histsame")
-    hRD.Draw("sameLP")
-    if hsNoStack != None: hsNoStack.Draw("same,nostack")
-    hMC.Draw("axissame")
+    if hToDraw != None:
+        hToDraw.Draw("hist")
+        hsMC.Draw("histsame")
+        if hRD != None: hRD.Draw("sameLP")
+        if hsNoStack != None: hsNoStack.Draw("same,nostack")
+        hToDraw.Draw("axissame")
     leg.Draw()
 
     pad2 = c.cd(2)
     pad2.SetPad(0, 0, 1, 2./7)
     pad2.SetBottomMargin(0.12)
 
-    hRatio.Draw("ep")
+    if hRatio != None: hRatio.Draw("ep")
 
     c.Print("plots/%s/%s/%s.png" % (mode, stepName, hName))
     return c, pad1, pad2, leg, hRD, hMC, hsMC, hsNoStack
-
+    
 
 info = {}
 info.update(yaml.load(open("config/plots.yaml")))
 info.update(yaml.load(open("config/grouping.yaml")))
 info.update(yaml.load(open("config/histogramming.yaml")))
 
-modes = ["MuMuMu", "MuElEl", "ElMuMu", "ElElEl"]
 files = []
 objs = {}
-for mode in modes:
-    f = TFile("hist/%s.root" % mode)
+for fName in glob("hist/*.root"):
+    f = TFile(fName)
+    mode = os.path.basename(fName)[:-5]
 
     for step in info['steps']:
         stepName = step['name']
