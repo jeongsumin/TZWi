@@ -18,7 +18,7 @@ def getSEBaseURL(fName):
     #                  "root://cms-t2-se01.sdfarm.kr:1094//pnfs/sdfarm.kr/data/cms/"]:
     #    ff = xrdFile.open(seBaseURL+fName)
     #    if xrdFile.is_open() and xrdFile.stat()[0].status == 0: return seBaseURL
-    if os.path.exist("/xrootd"+fName): return "root://cms-xrdr.private.lo:2094//xrd/"
+    if os.path.exists("/xrootd"+fName): return "root://cms-xrdr.private.lo:2094//xrd/"
     else:
         seBaseURL = "root://cms-t2-se01.sdfarm.kr:1094//pnfs/sdfarm.kr/data/cms/"
         xrdFile = xrdclient.File()
@@ -46,7 +46,7 @@ for arg in sys.argv[1:]:
             das_results = das_client.get_data("file dataset=%s" % ds)
             
             dirs = []
-            for das_results in das_results['data']:
+            for das_result in das_results['data']:
                 if len(das_result['file']) == 0: continue
                 fileInfo = das_result['file'][0]
                 fileName = str(fileInfo['name'])
