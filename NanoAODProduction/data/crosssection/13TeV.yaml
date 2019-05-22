@@ -9,6 +9,7 @@ crosssection:
   W4Jets:   544.3
 
   TT            : 831.76
+  TT.powheg     : 831.76
   TTTo2L2Nu     :  88.29
   TTToSemiLepton: 365.34
   TTToFullHadron: 377.96
