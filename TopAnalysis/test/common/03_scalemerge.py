@@ -5,7 +5,7 @@ from glob import *
 from ROOT import *
 import os
 
-modes = ["MuMuMu", "MuElEl", "ElMuMu", "ElElEl"]
+modes = [os.path.basename(x) for x in glob("raw_hist/*")]
 odName = "hist"
 
 info = {}
@@ -32,16 +32,12 @@ for f in glob("raw_hist/*/*/*.root"):
     fin = TFile(f)
     fins[f.split('/',1)[-1]] = fin
     scale = 1.0
-    hCount = fin.Get("nEventsGenWeighted")
-    if hCount != None: scale /= hCount.Integral()
+    hCutFlow = fin.Get("hCutFlow")
+    nEvent = hCutFlow.GetBinContent(1)
+    if nEvent != 0: scale /= nEvent
     scales[f.split('/',1)[-1]] = scale
 
 ## Plan how to merge histograms
-## First update histogram definition to include cut flows -> double check with tzwi-makehistograms
-nsteps = len(info['steps'])
-info['hists']['hCutFlow'  ] = {'bins': {'xmin': 1, 'nbinsX': nsteps, 'xmax': nsteps}, 'title': 'Cut flow;;Events'}
-info['hists']['hCutFlowNW'] = {'bins': {'xmin': 1, 'nbinsX': nsteps, 'xmax': nsteps}, 'title': 'Cut flow No Weight;;Events (unweighted)'}
-
 def makedirs(d, dName):
     if '/' not in dName: return d.mkdir(dName)
 
@@ -86,12 +82,15 @@ for mode in modes:
                         houtPath = "%s/%s" % (hinPath, title)
                         if houtPath not in hists:
                             hists[houtPath] = hin.Clone()
+                            hists[houtPath].SetTitle(longTitle)
                             hists[houtPath].Reset()
 
                         hists[houtPath].Add(hin, xsec*scales[fName])
 
     for houtPath, h in sorted(hists.iteritems(), key=lambda x: x[0]):
-        dout = makedirs(fout, houtPath)
+        dout = fout.GetDirectory(os.path.dirname(houtPath))
+        if dout == None: dout = makedirs(fout, os.path.dirname(houtPath))
         dout.cd()
+        h.SetName(os.path.basename(houtPath))
         h.Write()
 
