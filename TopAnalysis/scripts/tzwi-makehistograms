@@ -89,7 +89,7 @@ for istep, step in enumerate(steps):
         cut1 = '&&'.join(['(%s)' % x for x in cuts1 if x != "1"])
         if cut1 == "": cut1 = "1" 
 
-        if weight1 != "1"
+        if weight1 != "1":
             chain.Draw("%s>>h%s" % (expr, hname), "(%s)*(%s)" % (weight1, cut1), "goff")
         else:
             chain.Draw("%s>>h%s" % (expr, hname), "(%s)" % (cut1), "goff")
