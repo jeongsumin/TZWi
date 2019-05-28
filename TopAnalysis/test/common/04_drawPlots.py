@@ -50,10 +50,10 @@ def buildCanvas(prefix, hists, opt):
         h.Scale(lumi)
         hsNoStack.Add(h)
 
-    for h in hNoStacks:
-        leg.AddEntry(h, h.GetTitle(), "l")
     for h in hMCs:
         leg.AddEntry(h, h.GetTitle(), "F")
+    for h in hNoStacks:
+        leg.AddEntry(h, h.GetTitle(), "l")
     leg.AddEntry(hRD, "Data", "lp")
 
     hToDraw = hMC if hMC != None else hRD if hRD != None else None
@@ -71,11 +71,12 @@ def buildCanvas(prefix, hists, opt):
     if hToDraw != None:
         if opt['doLogY'] and maxY != 0:
             mins = [maxY]
-            if hRD != None: mins.extend([hRD.GetBinContent(i+1) for i in range(hRD.GetNbinsX()) if hRD.GetBinContent(i+1) > 0])
-            if len(hMCs) != 0: mins.extend([hMCs[-1].GetBinContent(i+1) for i in range(hMCs[-1].GetNbinsX()) if hMCs[-1].GetBinContent(i+1) > 0])
+            if hRD != None: mins.append(min([hRD.GetBinContent(i+1) for i in range(hRD.GetNbinsX()) if hRD.GetBinContent(i+1) > 0]))
+            if len(hMCs) != 0: mins.append(min([hMCs[-1].GetBinContent(i+1) for i in range(hMCs[-1].GetNbinsX()) if hMCs[-1].GetBinContent(i+1) > 0]))
+            for h in hNoStacks: mins.append(min([h.GetBinContent(i+1) for i in range(h.GetNbinsX()) if h.GetBinContent(i+1) > 0]))
             hToDraw.SetMinimum(0.5*min(mins))
 
-            hToDraw.SetMaximum(maxY*pow(10, 1./0.6))
+            hToDraw.SetMaximum(maxY*pow(10, 1./0.5))
         else:
             hToDraw.SetMinimum(0)
             hToDraw.SetMaximum(maxY/0.6)
@@ -131,7 +132,7 @@ def buildCanvas(prefix, hists, opt):
         hToDraw.Draw("hist")
         hsMC.Draw("histsame")
         if hRD != None: hRD.Draw("sameLP")
-        if hsNoStack != None: hsNoStack.Draw("same,nostack")
+        if hsNoStack != None: hsNoStack.Draw("same,nostack,hist")
         hToDraw.Draw("axissame")
     leg.Draw()
 
@@ -150,14 +151,17 @@ info.update(yaml.load(open("config/plots.yaml")))
 info.update(yaml.load(open("config/grouping.yaml")))
 info.update(yaml.load(open("config/histogramming.yaml")))
 
+imgs = {}
 files = []
 objs = {}
+htmlElements = {}
 for fName in glob("hist/*.root"):
     f = TFile(fName)
     mode = os.path.basename(fName)[:-5]
 
     for step in info['steps']:
         stepName = step['name']
+        if stepName not in htmlElements: htmlElements[stepName] = []
         if not os.path.exists("plots/%s/%s" % (mode, stepName)): os.makedirs("plots/%s/%s" % (mode, stepName))
         for hName in step['hists']:
             d = f.Get("%s/h%s" % (stepName, hName))
@@ -174,7 +178,12 @@ for fName in glob("hist/*.root"):
                     if 'title' in histStyle and histStyle['title'] != title: continue
                     if 'color' in histStyle: color = histStyle['color']
                 h.SetLineColor(kBlack)
-                if color != None: h.SetFillColor(eval(color))
+                if not title.startswith("Data"):
+                    if title in info['stackorders']:
+                        if color != None: h.SetFillColor(eval(color))
+                    else:
+                        if color != None: h.SetLineColor(eval(color))
+                        h.SetLineWidth(2)
 
                 if title.startswith("Data"): hRDs.append(h)
                 elif title in info['stackorders']: hMCs.append(h)
@@ -193,6 +202,21 @@ for fName in glob("hist/*.root"):
             #objs["%s/%s/%s" % (mode, stepName, hName)] = [c]#, hsMC, hMC, hRD, hRatio, leg]
 
             #obj[0].Print("plots/%s/%s/%s.png" % (mode, stepName, hName))
+            htmlElements[stepName].append( "%s/%s/%s" % (mode, stepName, hName) )
 
     files.append(f)
 
+with open("index.html", "w") as fout:
+    print>>fout, """<html><head><title>plots</title></head><body>"""
+    for stepName in sorted(htmlElements.keys()):
+        print>>fout, """<h2>%s</h2>""" % stepName
+        items = {}
+        for x in htmlElements[stepName]:
+            mode, step, name = x.split('/')
+            if name not in items: items[name] = []
+            items[name].append(x)
+        for name in sorted(items.keys()):
+            for item in sorted(items[name]):
+                print>>fout, '<div style="display:inline-block;border:1px solid grey;"><span>{0}</span><br/><a href="plots/{0}.png"><img style="width:300px" src="plots/{0}.png"/></a></div>'.format(item)
+            print>>fout, '<br/>'
+    print>>fout, """</body></html>"""
