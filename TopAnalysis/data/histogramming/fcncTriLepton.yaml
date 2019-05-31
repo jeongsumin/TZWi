@@ -1,7 +1,7 @@
 ## Histogramming for fcnc Trilepton analysis
 steps:
     - name: "S1"
-      cuts: ["CutStep >=1"]
+      cuts: ["CutStep >= 1", "Z_mass > 20"]
       hists: ["nPV", "nPV_noWeight",
               "Lepton1_pt", "Lepton1_eta", "Lepton1_phi",
               "Lepton2_pt", "Lepton2_eta", "Lepton2_phi",
@@ -9,7 +9,7 @@ steps:
               "Z_pt", "Z_mass", "W_MT",
               "nGoodJet", "nBjet", "nGoodJet_nBjet",]
     - name: "S2"
-      cuts: ["CutStep >= 2"]
+      cuts: ["CutStep >= 2", "Z_mass > 20"]
       hists: ["nPV", "nPV_noWeight",
               "Lepton1_pt", "Lepton1_eta", "Lepton1_phi",
               "Lepton2_pt", "Lepton2_eta", "Lepton2_phi",
@@ -18,28 +18,28 @@ steps:
               "nGoodJet", "nBjet", "nGoodJet_nBjet",
               "MET_pt", "MET_phi",]
     - name: "S3"
-      cuts: ["CutStep >= 3"]
+      cuts: ["CutStep >= 3", "Z_mass > 20"]
       hists: ["nPV", "nPV_noWeight",
               "Lepton1_pt", "Lepton2_pt", "Lepton3_pt",
               "Z_pt", "Z_mass", "W_MT",
               "nGoodJet", "nBjet", "nGoodJet_nBjet",
               "MET_pt", "MET_phi",]
     - name: "S4"
-      cuts: ["CutStep >= 4"]
+      cuts: ["CutStep >= 4", "Z_mass > 20"]
       hists: ["nPV", "nPV_noWeight",
               "Lepton1_pt", "Lepton2_pt", "Lepton3_pt",
               "Z_pt", "Z_mass", "W_MT",
               "nGoodJet", "nBjet", "nGoodJet_nBjet",
               "MET_pt", "MET_phi",]
     - name: "S5"
-      cuts: ["CutStep >= 5"]
+      cuts: ["CutStep >= 5", "Z_mass > 20"]
       hists: ["nPV", "nPV_noWeight",
               "Lepton1_pt", "Lepton2_pt", "Lepton3_pt",
               "Z_pt", "Z_mass", "W_MT",
               "nGoodJet", "nBjet", "nGoodJet_nBjet",
               "MET_pt", "MET_phi",]
     - name: "S6"
-      cuts: ["CutStep >= 6"]
+      cuts: ["CutStep >= 6", "Z_mass > 20"]
       hists: ["nPV", "nPV_noWeight",
               "Lepton1_pt", "Lepton2_pt", "Lepton3_pt",
               "Z_pt", "Z_mass", "W_MT",
@@ -77,8 +77,8 @@ hists:
         title: "Lepton1_phi;Leading lepton #phi (radian);Events"
         bins:
             nbinsX: 25
-            xmin: -3.1415922
-            xmax:  3.1415922
+            xmin: -4.0
+            xmax:  4.0
     Lepton2_pt:
         title: "Lepton2_pt;2nd leading lepton p_{T} (GeV);Events"
         bins:
@@ -95,8 +95,8 @@ hists:
         title: "Lepton2_phi;2nd leading lepton #phi (radian);Events"
         bins:
             nbinsX: 25
-            xmin: -3.1415922
-            xmax:  3.1415922
+            xmin: -4.0
+            xmax:  4.0
     Lepton3_pt:
         title: "Lepton3_pt;3rd leading lepton p_{T} (GeV);Events"
         bins:
@@ -113,8 +113,8 @@ hists:
         title: "Lepton3_phi;3rd leading lepton #phi (radian);Events"
         bins:
             nbinsX: 25
-            xmin: -3.1415922
-            xmax:  3.1415922
+            xmin: -4.0
+            xmax:  4.0
     Z_pt:
         title: "Z_pt;Z p_{T} (GeV);Events"
         bins:
@@ -131,14 +131,14 @@ hists:
         title: "Z_phi;Z #phi (radian);Events"
         bins:
             nbinsX: 25
-            xmin: -3.1415922
-            xmax:  3.1415922
+            xmin: -4.0
+            xmax:  4.0
     Z_mass:
         title: "Z_mass;Z mass (GeV);Events"
         bins:
-            nbinsX: 50
-            xmin: 0
-            xmax: 300
+            nbinsX: 10
+            xmin: 70
+            xmax: 110
 
     MET_pt:
         title: "MET;Missing transverse momentum (GeV);Events"
@@ -150,8 +150,8 @@ hists:
         title: "MET_phi;MET #phi (radian);Events"
         bins:
             nbinsX: 50
-            xmin: -3.1415922
-            xmax:  3.1415922
+            xmin: -4.0
+            xmax:  4.0
     nGoodJet:
         title: "nGoodJet;Jet multiplicity;Events"
         bins:
@@ -161,16 +161,16 @@ hists:
     nBjet:
         title: "nBjet;Bjet multiplicity;Events"
         bins:
-            nbinsX: 5
+            nbinsX: 10
             xmin: 0
-            xmax: 5
+            xmax: 10
     nGoodJet_nBjet:
         title: "nGoodJet vs nBjet;nGoodJet;nBjet;Events"
         expr: "nBjet:nGoodJet" # y:x
         bins:
-            nbinsX: 5
+            nbinsX: 10
             xmin: 0
-            xmax: 5
+            xmax: 10
             nbinsY: 10
             ymin: 0
             ymax: 10
