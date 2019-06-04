@@ -109,6 +109,6 @@ for f in glob("raw_hist/*/*/*.root"):
     for fin in fins.values(): fin.Close()
     print "done."
 
-os.system("hadd -f %s/All.root %s" % (odName, " ".join(["%s/%s.root" % (odName, for mode in modes)])))
+os.system("hadd -f %s/All.root %s" % (odName, " ".join(["%s/%s.root" % (odName, mode) for mode in modes)])))
 
 print "Finishing..."
