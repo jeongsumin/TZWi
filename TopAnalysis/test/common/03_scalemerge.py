@@ -35,11 +35,11 @@ for mode in modes:
     ## Plan how to merge histograms
     houts = {}
 
-## Collect files and their statistics
-fins = {}
-for f in glob("raw_hist/*/*/*.root"):
-    fin = TFile(f)
-    fins[f.split('/',1)[-1]] = fin
+    ## Collect files and their statistics
+    fins = {}
+    for f in glob("raw_hist/%s/*/*.root" % mode):
+        fin = TFile(f)
+        fins[f.split('/',1)[-1]] = fin
 
     ## Loop over steps x histograms
     print "@@ Collecting source histograms...", mode
@@ -88,7 +88,7 @@ for f in glob("raw_hist/*/*/*.root"):
                     if nEvents != 0.: hout.Scale(xsec/nEvents)
 
                     houts[houtPath].append(hout)
-                    print ""
+        print ""
 
     print "Writing output..."
     for houtPath, hists in sorted(houts.iteritems(), key=lambda x: x[0]):
@@ -109,6 +109,7 @@ for f in glob("raw_hist/*/*/*.root"):
     for fin in fins.values(): fin.Close()
     print "done."
 
-os.system("hadd -f %s/All.root %s" % (odName, " ".join(["%s/%s.root" % (odName, mode) for mode in modes)])))
+os.system("hadd -f %s/All.root %s" % (odName, " ".join(["%s/%s.root" % (odName, mode) for mode in modes])))
 
 print "Finishing..."
+

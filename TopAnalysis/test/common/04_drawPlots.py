@@ -69,14 +69,14 @@ def buildCanvas(prefix, hists, opt):
     grpRatioErr = TGraphAsymmErrors()
     if hMC != None:
         for b in range(hMC.GetNbinsX()):
-           grpMCErr.SetPoint(b, hMC.GetXaxis().GetBinCenter(b+1), hMC.GetBinContent(b+1))
-           grpRatioErr.SetPoint(b, hMC.GetXaxis().GetBinCenter(b+1), 1)
-           w = hMC.GetXaxis().GetBinWidth(b+1)
-           ey = hMC.GetBinError(b+1)
-           eyRatio = hMC.GetBinError(b+1)/hMC.GetBinContent(b+1) if hMC.GetBinContent(b+1) > 0 else 0
+            grpMCErr.SetPoint(b, hMC.GetXaxis().GetBinCenter(b+1), hMC.GetBinContent(b+1))
+            grpRatioErr.SetPoint(b, hMC.GetXaxis().GetBinCenter(b+1), 1)
+            w = hMC.GetXaxis().GetBinWidth(b+1)
+            ey = hMC.GetBinError(b+1)
+            eyRatio = hMC.GetBinError(b+1)/hMC.GetBinContent(b+1) if hMC.GetBinContent(b+1) > 0 else 0
 
-           grpMCErr.SetPointError(b, w/2, w/2, ey, ey)
-           grpRatioErr.SetPointError(b, w/2, w/2, eyRatio, eyRatio)
+            grpMCErr.SetPointError(b, w/2, w/2, ey, ey)
+            grpRatioErr.SetPointError(b, w/2, w/2, eyRatio, eyRatio)
 
     ## Set range
     maxY = max(hMC.GetMaximum() if hMC != None else 0,
@@ -168,7 +168,7 @@ def buildCanvas(prefix, hists, opt):
 
     c.Print("plots/%s/%s/%s.png" % (mode, stepName, hName))
     return c, pad1, pad2, leg, hRD, hMC, hsMC, hsNoStack
-
+    
 
 info = {}
 info.update(yaml.load(open("config/plots.yaml")))
@@ -260,3 +260,4 @@ for stepName in sorted(htmlElements.keys()):
                 print>>fout, '<div style="display:inline-block;border:1px solid grey;"><span>{0}</span><br/><a href="{0}.png"><img style="width:300px" src="{0}.png"/></a></div>'.format(item)
             print>>fout, '<br/>'
         print>>fout, """</body></html>"""
+
