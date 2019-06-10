@@ -43,6 +43,15 @@ Run2016BE.DoubleMuon: "
   !( ( HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL ) ||
     HLT_Mu8_DiEle12_CaloIdL_TrackIdL || HLT_DiMu9_Ele9_CaloIdL_TrackIdL)
 "
+Run2016Fexception.DoubleMuon: "
+  ( ( HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL ||
+      HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ) ||
+    HLT_TripleMu_12_10_5)
+  &&
+  !(( HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL ||
+      HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL ) ||
+    HLT_Mu8_DiEle12_CaloIdL_TrackIdL || HLT_DiMu9_Ele9_CaloIdL_TrackIdL)
+"
 Run2016FG.DoubleMuon: "
   ( ( HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL ||
       HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ) ||
@@ -103,6 +112,19 @@ Run2016BE.SingleMuon: "
   !(( HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL) ||
     HLT_Mu8_DiEle12_CaloIdL_TrackIdL || HLT_DiMu9_Ele9_CaloIdL_TrackIdL)
 "
+Run2016Fexception.SingleMuon: "
+  (HLT_IsoMu24 || HLT_IsoTkMu24)
+  &&
+  !(HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ || HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL)
+  &&
+  !(( HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL ||
+      HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ ) ||
+    HLT_TripleMu_12_10_5)
+  &&
+  !(( HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL ||
+      HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL ) ||
+    HLT_Mu8_DiEle12_CaloIdL_TrackIdL || HLT_DiMu9_Ele9_CaloIdL_TrackIdL)
+"
 Run2016FG.SingleMuon: "
   (HLT_IsoMu24 || HLT_IsoTkMu24) 
   &&
@@ -113,7 +135,7 @@ Run2016FG.SingleMuon: "
     HLT_TripleMu_12_10_5)
   &&
   !(( HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL ||
-      HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ) ||
+      HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ ) ||
     HLT_Mu8_DiEle12_CaloIdL_TrackIdL || HLT_DiMu9_Ele9_CaloIdL_TrackIdL)
 "
 Run2016H.SingleMuon: "
