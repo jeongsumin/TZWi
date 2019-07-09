@@ -1,0 +1,19 @@
+dataset:
+    MC2017.ST_FCNC-TH_HTobb_hct:
+        ? /ST_FCNC-TH_Tleptonic_HTobb_eta_hct-MadGraph5-pythia8/RunIIFall17NanoAODv4-PU2017_12Apr2018_Nano14Dec2018_new_pmx_102X_mc2017_realistic_v6-v1/NANOAODSIM
+        : []
+    MC2017.ST_FCNC-TH_HTobb_hut:
+        ? /ST_FCNC-TH_Tleptonic_HTobb_eta_hut-MadGraph5-pythia8/RunIIFall17NanoAODv4-PU2017_12Apr2018_Nano14Dec2018_new_pmx_102X_mc2017_realistic_v6-v1/NANOAODSIM
+        : []
+    MC2017.ST_FCNC-TH_HToWWZZtautau_hct:
+        ? /ST_FCNC-TH_Tleptonic_HToWWZZtautau_eta_hct-MadGraph5-pythia8/RunIIFall17NanoAODv4-PU2017_12Apr2018_Nano14Dec2018_new_pmx_102X_mc2017_realistic_v6-v1/NANOAODSIM
+        : []
+    MC2017.ST_FCNC-TH_HToWWZZtautau_hut:
+        ? /ST_FCNC-TH_Tleptonic_HToWWZZtautau_eta_hut-MadGraph5-pythia8/RunIIFall17NanoAODv4-PU2017_12Apr2018_Nano14Dec2018_new_pmx_102X_mc2017_realistic_v6-v1/NANOAODSIM
+        : []
+    MC2017.ST_FCNC-TH_HToaa_hct:
+        ? /ST_FCNC-TH_Tleptonic_HToaa_eta_hct-MadGraph5-pythia8/RunIIFall17NanoAODv4-PU2017_12Apr2018_Nano14Dec2018_new_pmx_102X_mc2017_realistic_v6-v1/NANOAODSIM
+        : []
+    MC2017.ST_FCNC-TH_HToaa_hut:
+        ? /ST_FCNC-TH_Tleptonic_HToaa_eta_hut-MadGraph5-pythia8/RunIIFall17NanoAODv4-PU2017_12Apr2018_Nano14Dec2018_new_pmx_102X_mc2017_realistic_v6-v1/NANOAODSIM
+        : []
